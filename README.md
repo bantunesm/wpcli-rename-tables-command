@@ -1,0 +1,1 @@
+# wpcli-rename-tables-command
