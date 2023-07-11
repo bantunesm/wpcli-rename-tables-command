@@ -20,7 +20,7 @@ if (defined('WP_CLI' ) && WP_CLI) {
    *
    * ## USAGE
    *
-   *     wp rename-tables wp_ new_prefix_
+   *     wp <mark>rename-tables</mark> wp_ new_prefix_
    *
    * @param array $args Command arguments.
    */
@@ -49,9 +49,15 @@ if (defined('WP_CLI' ) && WP_CLI) {
             WP_CLI::success("Table renamed: {$old_table} to {$new_table}");
         }
     }
+
+    // Renaming the user_roles option in the options table
+    $old_option = $old_prefix . 'user_roles';
+    $new_option = $new_prefix . 'user_roles';
+
+    $wpdb->query("UPDATE `{$new_prefix}options` SET option_name = '{$new_option}' WHERE option_name = '{$old_option}'");
   
-    WP_CLI::success('Tables renamed successfully.');
+    WP_CLI::success('Tables and user roles option renamed successfully.');
   }
  
-  WP_CLI::add_command('rename-tables', 'rename_tables_command');
+  WP_CLI::add_command('<mark>rename-tables</mark>', 'rename_tables_command');
 }
